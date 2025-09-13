@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Your Dream Kitchen Style | Claremont Kitchens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+Pro:wght@300;400;500;600&display=swap');
+        body { font-family: 'Source Sans Pro', sans-serif; }
+        .elegant-heading { font-family: 'Playfair Display', serif; }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .quiz-option:hover {
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+        
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-stone-50 to-amber-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="mb-4">
+                <h1 class="elegant-heading text-5xl font-semibold text-gray-800 mb-2">Claremont Kitchens</h1>
+                <div class="w-24 h-0.5 bg-gray-600 mx-auto mb-4"></div>
+            </div>
+            <h2 class="elegant-heading text-3xl font-medium text-gray-700 mb-4">Discover Your Dream Kitchen Style</h2>
+            <p class="text-lg text-gray-600">Take our personalised style quiz to find the perfect kitchen that reflects your unique taste and lifestyle</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="bg-white rounded-full h-3 mb-8 shadow-inner">
+            <div id="progressBar" class="progress-bar bg-gradient-to-r from-gray-500 to-gray-700 h-3 rounded-full" style="width: 0%"></div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="bg-white rounded-2xl shadow-xl p-8 fade-in">
+            <!-- Start Screen -->
+            <div id="startScreen" class="text-center">
+                <div class="mb-8">
+                    <!-- Kitchen Icon SVG -->
+                    <svg class="mx-auto w-24 h-24 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18 2.01L6 2c-1.11 0-2 .89-2 2v16c0 1.11.89 2 2 2h12c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2zM18 20H6V4h2v7l2-1 2 1V4h6v16z"/>
+                    </svg>
+                </div>
+                <h2 class="elegant-heading text-2xl font-medium text-gray-800 mb-4">Ready to Create Your Perfect Kitchen?</h2>
+                <p class="text-gray-600 mb-8">Answer 8 thoughtful questions to discover which kitchen style perfectly complements your home and lifestyle. Let's find your dream kitchen together.</p>
+                <button onclick="startQuiz()" class="bg-gradient-to-r from-gray-600 to-gray-800 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-gray-700 hover:to-gray-900 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                    Begin My Style Journey
+                </button>
+            </div>
+
+            <!-- Question Screen -->
+            <div id="questionScreen" class="hidden">
+                <div class="mb-6">
+                    <span id="questionNumber" class="text-sm font-medium text-gray-600">Question 1 of 8</span>
+                    <h2 id="questionText" class="elegant-heading text-2xl font-medium text-gray-800 mt-2"></h2>
+                </div>
+                
+                <div id="optionsContainer" class="space-y-4">
+                    <!-- Options will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="resultsScreen" class="hidden text-center">
+                <div class="mb-8">
+                    <div id="resultIcon" class="mx-auto w-32 h-32 mb-6"></div>
+                    <h2 id="resultTitle" class="elegant-heading text-3xl font-semibold text-gray-800 mb-4"></h2>
+                    <p id="resultDescription" class="text-lg text-gray-600 mb-8"></p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-stone-50 rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3">Key Features:</h3>
+                        <ul id="keyFeatures" class="text-gray-600 space-y-2"></ul>
+                    </div>
+                    <div class="bg-stone-50 rounded-xl p-6">
+                        <h3 class="font-semibold text-gray-800 mb-3">Perfect For:</h3>
+                        <ul id="perfectFor" class="text-gray-600 space-y-2"></ul>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 mb-8 border border-gray-200">
+                    <h3 class="elegant-heading text-xl font-medium text-gray-800 mb-4">Recommended Claremont Kitchen Ranges:</h3>
+                    <div id="recommendedRanges" class="grid md:grid-cols-2 gap-4"></div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="restartQuiz()" class="bg-gradient-to-r from-gray-600 to-gray-800 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-gray-700 hover:to-gray-900 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                        Discover Another Style
+                    </button>
+                    <a href="https://claremontkitchens.co.uk/" target="_blank" class="bg-white border-2 border-gray-600 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-50 hover:border-gray-700 transform hover:scale-105 transition-all duration-300 shadow-lg">
+                        Explore All Our Ranges
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "How do you love to start your weekend mornings?",
+                options: [
+                    { text: "Baking homemade treats while the family gathers around", style: "country" },
+                    { text: "Creating colourful, Instagram-worthy breakfast bowls", style: "bold" },
+                    { text: "Enjoying a perfectly brewed coffee in serene quiet", style: "minimalist" },
+                    { text: "Hosting an elegant brunch for close friends", style: "shaker" }
+                ]
+            },
+            {
+                question: "Which colour palette makes your heart sing?",
+                options: [
+                    { text: "Soft creams, sage greens, and warm natural woods", style: "country" },
+                    { text: "Vibrant jewel tones and playful accent colours", style: "bold" },
+                    { text: "Crisp whites, sophisticated greys, and clean blacks", style: "minimalist" },
+                    { text: "Timeless navy, warm stone, and elegant brass touches", style: "shaker" }
+                ]
+            },
+            {
+                question: "Your dream kitchen island would feature:",
+                options: [
+                    { text: "A welcoming farmhouse table with charming mismatched seating", style: "country" },
+                    { text: "A bold centrepiece with vibrant, personality-filled stools", style: "bold" },
+                    { text: "Sleek lines with a stunning waterfall edge and hidden storage", style: "minimalist" },
+                    { text: "Classic panelled design with luxurious leather or fabric seating", style: "shaker" }
+                ]
+            },
+            {
+                question: "How do you prefer to showcase your beautiful things?",
+                options: [
+                    { text: "Open shelving displaying treasured vintage pieces and copper cookware", style: "country" },
+                    { text: "Colourful ceramics and unique finds proudly on display", style: "bold" },
+                    { text: "Everything beautifully organised behind closed doors", style: "minimalist" },
+                    { text: "Curated collections behind elegant glass-fronted cabinetry", style: "shaker" }
+                ]
+            },
+            {
+                question: "Your perfect kitchen lighting creates:",
+                options: [
+                    { text: "Warm, inviting pools of light over intimate gathering spaces", style: "country" },
+                    { text: "Dramatic statement pieces that become conversation starters", style: "bold" },
+                    { text: "Clean, even illumination that highlights architectural details", style: "minimalist" },
+                    { text: "Sophisticated pendant lighting with refined metallic finishes", style: "shaker" }
+                ]
+            },
+            {
+                question: "Your approach to kitchen organisation is:",
+                options: [
+                    { text: "Charming open storage with natural baskets and vintage charm", style: "country" },
+                    { text: "A delightful mix of open shelving and colourful storage solutions", style: "bold" },
+                    { text: "Everything has its place in sleek, integrated storage systems", style: "minimalist" },
+                    { text: "Beautifully organised traditional cabinetry with quality hardware", style: "shaker" }
+                ]
+            },
+            {
+                question: "Your ideal worktop material would be:",
+                options: [
+                    { text: "Warm butcher block or characterful natural stone", style: "country" },
+                    { text: "Striking quartz in bold colours or eye-catching patterns", style: "bold" },
+                    { text: "Pristine white quartz or sophisticated polished concrete", style: "minimalist" },
+                    { text: "Timeless marble or premium engineered stone", style: "shaker" }
+                ]
+            },
+            {
+                question: "Your cooking style reflects:",
+                options: [
+                    { text: "Cherished family recipes and nurturing comfort foods", style: "country" },
+                    { text: "Creative experimentation with exciting global flavours", style: "bold" },
+                    { text: "Fresh, quality ingredients prepared with mindful simplicity", style: "minimalist" },
+                    { text: "Time-honoured techniques using the finest ingredients", style: "shaker" }
+                ]
+            }
+        ];
+
+        const styles = {
+            country: {
+                title: "Country Kitchen",
+                description: "You're drawn to warmth, tradition, and creating a nurturing heart of the home. Your ideal kitchen is a welcoming sanctuary where cherished memories are made and loved ones naturally gather.",
+                icon: `<svg class="w-full h-full text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7v10c0 5.55 3.84 10 9 11 1.16.21 2.76.21 3.91 0C20.16 27 24 22.55 24 17V7l-10-5z"/>
+                    <path d="M12 4.5L4.5 8.5v8.5c0 4.14 2.86 7.5 6.5 8.25.64.13 1.36.13 2 0C16.64 24.5 19.5 21.14 19.5 17V8.5L12 4.5z"/>
+                </svg>`,
+                features: [
+                    "• Beautiful farmhouse sinks and heritage-inspired fixtures",
+                    "• Natural materials celebrating wood grain and stone texture",
+                    "• Charming open shelving and vintage-style storage",
+                    "• Soft, welcoming colour palettes that feel like home"
+                ],
+                perfectFor: [
+                    "• Mothers who love creating family traditions",
+                    "• Women who appreciate handcrafted details and authenticity",
+                    "• Those who enjoy hosting intimate gatherings",
+                    "• Anyone seeking comfort and timeless appeal"
+                ],
+                ranges: [
+                    { name: "Midhurst Shaker", description: "Traditional craftsmanship with rustic charm" },
+                    { name: "Arundel In-Frame", description: "Classic country elegance with authentic detailing" }
+                ]
+            },
+            bold: {
+                title: "Bold & Colourful Kitchen",
+                description: "You're creative, confident, and love expressing your unique personality! Your kitchen should be as vibrant and inspiring as you are – a space that energises and delights every day.",
+                icon: `<svg class="w-full h-full text-pink-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>`,
+                features: [
+                    "• Stunning cabinet colours and artistic backsplashes",
+                    "• Thoughtfully curated patterns and rich textures",
+                    "• Show-stopping lighting that becomes art",
+                    "• Creative storage that's both beautiful and functional"
+                ],
+                perfectFor: [
+                    "• Creative professionals and artistic souls",
+                    "• Women who love experimenting with flavours and presentation",
+                    "• Those who enjoy being the hostess with flair",
+                    "• Anyone wanting their kitchen to spark daily joy"
+                ],
+                ranges: [
+                    { name: "Petworth", description: "Contemporary design with bold colour possibilities" },
+                    { name: "Hove", description: "Modern style perfect for creative expression" }
+                ]
+            },
+            minimalist: {
+                title: "Modern Minimalist & Sleek",
+                description: "You value serenity, sophistication, and purposeful living. Your ideal kitchen is a calming retreat where clean lines and thoughtful design create the perfect backdrop for mindful moments.",
+                icon: `<svg class="w-full h-full text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 3v18h18V3H3zm16 16H5V5h14v14z"/>
+                    <path d="M11 7h2v2h-2zm0 4h2v2h-2zm0 4h2v2h-2z"/>
+                </svg>`,
+                features: [
+                    "• Seamless handle-free cabinetry with perfect proportions",
+                    "• Cleverly integrated appliances and invisible storage",
+                    "• Sophisticated neutral palettes that never date",
+                    "• Premium materials with flawless finishes"
+                ],
+                perfectFor: [
+                    "• Busy professionals who value calm and efficiency",
+                    "• Women who find peace in uncluttered spaces",
+                    "• Those who appreciate architectural beauty",
+                    "• Anyone seeking a serene, spa-like environment"
+                ],
+                ranges: [
+                    { name: "Hove", description: "Clean lines and contemporary minimalist design" },
+                    { name: "Worthing", description: "Sleek sophistication with seamless integration" }
+                ]
+            },
+            shaker: {
+                title: "Contemporary Modern Shaker",
+                description: "You appreciate enduring elegance with a fresh perspective. Your kitchen beautifully balances classic sophistication with modern living – timeless yet perfectly suited to today's lifestyle.",
+                icon: `<svg class="w-full h-full text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+                    <path d="M7 7h10v2H7zm0 4h10v2H7zm0 4h7v2H7z"/>
+                </svg>`,
+                features: [
+                    "• Refined panel doors with contemporary proportions",
+                    "• Exquisite hardware in brushed brass or sophisticated blacks",
+                    "• Elegant colour schemes that stand the test of time",
+                    "• Perfect harmony of heritage charm and modern convenience"
+                ],
+                perfectFor: [
+                    "• Women who love classic style with contemporary comfort",
+                    "• Those who frequently entertain with grace",
+                    "• Anyone investing in long-lasting, sophisticated design",
+                    "• Those who appreciate fine craftsmanship and attention to detail"
+                ],
+                ranges: [
+                    { name: "Fernhurst", description: "Contemporary shaker style with refined elegance" },
+                    { name: "Petworth", description: "Modern interpretation of classic shaker design" }
+                ]
+            }
+        };
+
+        let currentQuestion = 0;
+        let scores = { country: 0, bold: 0, minimalist: 0, shaker: 0 };
+
+        function startQuiz() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'quiz-option bg-stone-50 hover:bg-gray-50 border-2 border-transparent hover:border-gray-300 rounded-xl p-4 cursor-pointer transition-all duration-300';
+                optionDiv.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-4 flex items-center justify-center">
+                            <div class="w-3 h-3 rounded-full bg-gray-600 opacity-0 transition-opacity duration-200"></div>
+                        </div>
+                        <span class="text-gray-700 font-medium">${option.text}</span>
+                    </div>
+                `;
+                
+                optionDiv.addEventListener('click', () => selectOption(option.style, optionDiv));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            updateProgressBar();
+        }
+
+        function selectOption(style, selectedDiv) {
+            scores[style]++;
+            
+            // Visual feedback
+            const dot = selectedDiv.querySelector('.w-3');
+            dot.style.opacity = '1';
+            selectedDiv.classList.add('border-gray-500', 'bg-gray-50');
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }, 500);
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function showResults() {
+            const winningStyle = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            const result = styles[winningStyle];
+            
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            
+            document.getElementById('resultIcon').innerHTML = result.icon;
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultDescription').textContent = result.description;
+            
+            const featuresContainer = document.getElementById('keyFeatures');
+            featuresContainer.innerHTML = result.features.map(feature => `<li>${feature}</li>`).join('');
+            
+            const perfectForContainer = document.getElementById('perfectFor');
+            perfectForContainer.innerHTML = result.perfectFor.map(item => `<li>${item}</li>`).join('');
+            
+            const rangesContainer = document.getElementById('recommendedRanges');
+            rangesContainer.innerHTML = result.ranges.map(range => `
+                <div class="bg-white rounded-lg p-4 border border-gray-300">
+                    <h4 class="font-semibold text-gray-800 mb-2">${range.name}</h4>
+                    <p class="text-gray-600 text-sm">${range.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            scores = { country: 0, bold: 0, minimalist: 0, shaker: 0 };
+            
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.getElementById('progressBar').style.width = '0%';
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97e7d33063e20ac6',t:'MTc1Nzc2ODM5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
